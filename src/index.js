@@ -7,13 +7,16 @@ import './index.css';
 import App from './App/Layout/App';
 import * as serviceWorker from './serviceWorker';
 import { ConfigStore } from './App/Store/ConfigStore';
+import ScrollToTop from './App/Common/Util/ScrollToTop';
 
 const store = ConfigStore();
 
 ReactDOM.render(
                 <Provider store={store}>
                     <BrowserRouter>
-                        <App />
+                        <ScrollToTop>
+                            <App />
+                        </ScrollToTop>
                     </BrowserRouter>    
                 </Provider>
                 , document.getElementById('root'));
