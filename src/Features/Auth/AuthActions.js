@@ -1,11 +1,10 @@
 import { LOGIN_USER, LOGOUT_USER } from './AuthConstants';
+import { closeModal} from '../Modals/ModalActions';
 
 export const login = ( creds) => {
-    return {
-        type: LOGIN_USER,
-        payload: {
-            creds
-        }
+    return dispatch => {
+        dispatch({type: LOGIN_USER, payload: {creds}})
+        dispatch(closeModal())
     }
 }
 

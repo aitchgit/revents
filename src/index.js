@@ -8,8 +8,10 @@ import App from './App/Layout/App';
 import * as serviceWorker from './serviceWorker';
 import { ConfigStore } from './App/Store/ConfigStore';
 import ScrollToTop from './App/Common/Util/ScrollToTop';
+import { loadEvents } from './Features/Event/eventActions';
 
 const store = ConfigStore();
+store.dispatch(loadEvents());
 
 ReactDOM.render(
                 <Provider store={store}>
