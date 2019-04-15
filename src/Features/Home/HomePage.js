@@ -12,7 +12,7 @@ const HomePage = ({ history }) => {
                   src="/assets/logo.png"
                   alt="logo"
                 />
-                <div className="content">ReVents</div>
+                <div className="content">rEvents</div>
               </h1>
               <h2>Do whatever you want to do</h2>
               <button onClick={() => history.push('/events')}  className="ui huge white inverted button">
