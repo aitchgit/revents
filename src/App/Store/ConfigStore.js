@@ -1,19 +1,40 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from '../Reducers/RootReducer';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import { reduxFirestore, getFirestore } from 'redux-firestore';
 import thunk from 'redux-thunk';
+import rootReducer from '../Reducers/RootReducer';
+import firebase from '../Config/Firebase';
 
-export const ConfigStore = (preloadState) => {
-    const middlewares = [thunk];
-    const middlewareEnhancer = applyMiddleware(...middlewares);
+const rrfConfig = {
+  userProfile: 'users',
+  attachAuthIsReady: true,
+  useFirestoreForProfile: true,
+  updateProfileOnLogin: false
+};
 
-    const storeEnhancers = [middlewareEnhancer];
+export const ConfigStore = preloadedState => {
+  const middlewares = [thunk.withExtraArgument({ getFirebase, getFirestore })];
+  const middlewareEnhancer = applyMiddleware(...middlewares);
 
-    const composedEnhancer = compose(...storeEnhancers);
+  const storeEnhancers = [middlewareEnhancer];
 
-    const store = createStore(
-        rootReducer,
-        preloadState,
-        composedEnhancer
-    );
-    return store;
-}
+  const composedEnhancer = composeWithDevTools(
+    ...storeEnhancers,
+    reactReduxFirebase(firebase, rrfConfig),
+    reduxFirestore(firebase)
+  );
+
+  const store = createStore(rootReducer, preloadedState, composedEnhancer);
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (module.hot) {
+      module.hot.accept('../Reducers/RootReducer', () => {
+        const newRootReducer = require('../Reducers/RootReducer').default;
+        store.replaceReducer(newRootReducer);
+      });
+    }
+  }
+
+  return store;
+};

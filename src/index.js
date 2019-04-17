@@ -10,24 +10,25 @@ import App from './App/Layout/App';
 import * as serviceWorker from './serviceWorker';
 import { ConfigStore } from './App/Store/ConfigStore';
 import ScrollToTop from './App/Common/Util/ScrollToTop';
-import { loadEvents } from './Features/Event/eventActions';
 
 const store = ConfigStore();
-store.dispatch(loadEvents());
 
-ReactDOM.render(
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <ScrollToTop>
-                            <ReduxToastr 
-                                position="bottom-right"
-                                transitionIn="fadeIn"
-                                transitionOut="fadeOut"
-                            />
-                            <App />
-                        </ScrollToTop>
-                    </BrowserRouter>    
-                </Provider>
-                , document.getElementById('root'));
+store.firebaseAuthIsReady.then(() => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <BrowserRouter>
+                <ScrollToTop>
+                    <ReduxToastr 
+                        position="bottom-right"
+                        transitionIn="fadeIn"
+                        transitionOut="fadeOut"
+                    />
+                    <App />
+                </ScrollToTop>
+            </BrowserRouter>    
+        </Provider>
+        , document.getElementById('root'));
+});
+
 
 serviceWorker.unregister();
