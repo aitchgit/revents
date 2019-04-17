@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as FormReducer } from 'redux-form';
+import { reducer as toastrReducer } from 'react-redux-toastr';
 import testReducer from '../../Features/TestArea/TestReducer';
 import eventReducer from '../../Features/Event/eventReducer';
 import modalReducer from '../../Features/Modals/ModalReducer';
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     events: eventReducer,
     modal: modalReducer,
     auth: authReducer,
-    async: asyncReducer
+    async: asyncReducer,
+    toastr: toastrReducer
 })
 
 export default rootReducer;
