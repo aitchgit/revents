@@ -1,6 +1,6 @@
 import React from 'react';
 import { Segment, List, Label, Item } from 'semantic-ui-react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const EventDetailedSidebar = ({ attendees }) => {
   const isHost = false;
